@@ -1,27 +1,44 @@
-
+import { useEffect, useState } from "react";
 import WeatherCard from "./weatherCard"
+
 
 interface WeatherCardBannerProps{
   weatherCardData:(string | number)[][]
 }
 function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
-    let dailyPrecipitationMean: (string | number)[]= weatherCardData[0]
-    let dailyTemperatureMin: (string | number)[] = weatherCardData[1]
-    let dailyTemperaturesMax: (string | number)[] = weatherCardData[2]
-    let dailyDates: (string | number)[] = weatherCardData[3]
-    let dailyWindSpeed: (string | number)[] = weatherCardData[4]
-    let dailyWeatherCode: (string | number)[] = weatherCardData[5]
-    let finalDailyDateData: string[]= ['']
+    const [dailyPrecipitationMean, setDailyPrecipitationMean] = useState(weatherCardData[0]);
+    const [dailyTemperatureMin, setDailyTemperatureMin] = useState(weatherCardData[1] || []);
+    const [dailyTemperaturesMax, setDailyTemperaturesMax] = useState(weatherCardData[2]);
+    const [dailyDates, setDailyDates] = useState(weatherCardData?.[3] || []);
+    const [dailyWindSpeed, setDailyWindSpeed] = useState(weatherCardData[4]);
+    const [dailyWeatherCode, setDailyWeatherCode] = useState(weatherCardData[5]);
+    const weatherImage: string[] = []
+    const finalDailyDateData: string[]= []
+
+    useEffect(()=> {
+      setDailyPrecipitationMean(weatherCardData[0]);
+      setDailyTemperatureMin(weatherCardData[1] || []);
+      setDailyTemperaturesMax(weatherCardData[2]);
+      setDailyDates(weatherCardData[3] || []);
+      setDailyWindSpeed(weatherCardData[4]);
+      setDailyWeatherCode(weatherCardData[5]);
+    }, [weatherCardData])
     
     // Build card content data   
-    for (let i = 0; i < 7; i++) {
-        let dateToString: string = dailyDates[i].toString()
-        let dateArray: string[] = dateToString.split("-")       
-        let date = dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
+    for (let i = 0; i < dailyDates.length; i++) {
+        const dateToString: string = dailyDates[i].toString()
+        const dateArray: string[] = dateToString.split("-")       
+        const date = dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
         finalDailyDateData.push(date);
 
-        let weatherCode = dailyWeatherCode[i];
-        let weatherImage: string[] = ['']
+        const weatherCode = dailyWeatherCode[i] as number;
+
+        // if (weatherCode === 3 || (weatherCode >= 21 && weatherCode <= 24))
+
+        // if ([3, 21, 22, 23, 24, 50, 51, 52, 53, 56, 60, 61, 70, 71].includes(weatherCode)) {
+        //   weatherImage.push('/Images/static/cloudy.jpg');
+        // } else if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 20, 28, 30, 31, 32, 33, 34, 35, 40])
+
         switch(weatherCode){
           case 3:
           case 21:
@@ -37,7 +54,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 61:
           case 70:
           case 71:
-            weatherImage.push('/Images/static/cloudy.jpg')
+            weatherImage.push('Images/static/cloudy.jpg')
             break;
           case 4:
           case 5:
@@ -68,7 +85,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 47:
           case 48:
           case 49:
-            weatherImage.push('/Images/static/forg_640.jpg')
+            weatherImage.push('Images/static/forg_640.jpg')
             break;
           case 16:
           case 24:
@@ -104,7 +121,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 82:
           case 83:
           case 84:
-            weatherImage.push('/Images/static/rain.jpg')
+            weatherImage.push('Images/static/rain.jpg')
             break;
           case 72:
           case 73:
@@ -120,7 +137,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 88:
           case 89:
           case 90:
-              weatherImage.push('/Images/static/snow_640.jpg')
+              weatherImage.push('Images/static/snow_640.jpg')
               break;
           case 13:
           case 17:
@@ -136,82 +153,32 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 97:
           case 98:
           case 99:
-            weatherImage.push('/Images/static/lightning.jpg')
+            weatherImage.push('Images/static/lightning.jpg')
             break;
           case 0:
           case 1:
           case 2:
-            weatherImage.push('/Image/static/sun.jpg')
-            break;
-
-        
-
-        
-      }
-  
-    //   createCard(date, temp, perci, image, i);
-
+            weatherImage.push('Images/static/sun.jpg')
+            break;        
+        }
   }
     return (
 
-        <div className="d-flex flex-row justify-content-between mb-5 ms-1 me-1">
-            <WeatherCard 
-                date={finalDailyDateData[0]}
-                tempMin={dailyTemperatureMin[0]}
-                tempMax={dailyTemperaturesMax[0]}
-                windSpeed={dailyWindSpeed[0]}
-                weatherImage={weatherImage[0]}
-            ></WeatherCard>
-            <WeatherCard 
-                date={finalDailyDateData[1]}
-                tempMin={dailyTemperatureMin[1]}
-                tempMax={dailyTemperaturesMax[1]}
-                windSpeed={dailyWindSpeed[1]}
-                weatherImage={weatherImage[1]}
-            ></WeatherCard>
-            <WeatherCard 
-                date={finalDailyDateData[2]}
-                tempMin={dailyTemperatureMin[2]}
-                tempMax={dailyTemperaturesMax[2]}
-                windSpeed={dailyWindSpeed[2]}
-                weatherImage={weatherImage[2]}
-            ></WeatherCard>
-            <WeatherCard 
-                date={finalDailyDateData[3]}
-                tempMin={dailyTemperatureMin[3]}
-                tempMax={dailyTemperaturesMax[3]}
-                windSpeed={dailyWindSpeed[3]}
-                weatherImage={weatherImage[3]}
-            ></WeatherCard>
-            <WeatherCard 
-                date={finalDailyDateData[4]}
-                tempMin={dailyTemperatureMin[4]}
-                tempMax={dailyTemperaturesMax[4]}
-                windSpeed={dailyWindSpeed[4]}
-                weatherImage={weatherImage[4]}
-            ></WeatherCard>
-            <WeatherCard 
-                date={finalDailyDateData[5]}
-                tempMin={dailyTemperatureMin[5]}
-                tempMax={dailyTemperaturesMax[5]}
-                windSpeed={dailyWindSpeed[5]}
-                weatherImage={weatherImage[5]}
-            ></WeatherCard>
-            <WeatherCard 
-                date={finalDailyDateData[6]}
-                tempMin={dailyTemperatureMin[6]}
-                tempMax={dailyTemperaturesMax[6]}
-                windSpeed={dailyWindSpeed[6]}
-                weatherImage={weatherImage[6]}
-            ></WeatherCard>
-          
+        <div className="d-flex flex-row justify-content-evenly mb-5 ms-1 me-1">
+          {dailyPrecipitationMean.map((_, i) => (
+             <WeatherCard
+             key={i}
+             date={finalDailyDateData?.[i].toString()}
+             precipitation={dailyPrecipitationMean?.[i]} 
+             tempMin={dailyTemperatureMin?.[i]}
+             tempMax={dailyTemperaturesMax?.[i]}
+             windSpeed={dailyWindSpeed?.[i]}
+             weatherImage={weatherImage?.[i]}
+             ></WeatherCard>
+            ))}          
         </div>
     )
   
 }
 
 export default WeatherCardBanner
-
-var str = "Apples are round, and apples are juicy."; 
-var splitted = str.split(" ", 3); 
-console.log(splitted)
