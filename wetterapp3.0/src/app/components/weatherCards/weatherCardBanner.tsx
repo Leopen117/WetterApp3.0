@@ -54,7 +54,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 61:
           case 70:
           case 71:
-            weatherImage.push('Images/static/cloudy.jpg')
+            weatherImage.push('/Images/static/cloudy.jpg')
             break;
           case 4:
           case 5:
@@ -85,7 +85,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 47:
           case 48:
           case 49:
-            weatherImage.push('Images/static/forg_640.jpg')
+            weatherImage.push('/Images/static/forg_640.jpg')
             break;
           case 16:
           case 24:
@@ -121,7 +121,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 82:
           case 83:
           case 84:
-            weatherImage.push('Images/static/rain.jpg')
+            weatherImage.push('/Images/static/rain.jpg')
             break;
           case 72:
           case 73:
@@ -137,7 +137,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 88:
           case 89:
           case 90:
-              weatherImage.push('Images/static/snow_640.jpg')
+              weatherImage.push('/Images/static/snow_640.jpg')
               break;
           case 13:
           case 17:
@@ -153,12 +153,12 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
           case 97:
           case 98:
           case 99:
-            weatherImage.push('Images/static/lightning.jpg')
+            weatherImage.push('/Images/static/lightning.jpg')
             break;
           case 0:
           case 1:
           case 2:
-            weatherImage.push('Images/static/sun.jpg')
+            weatherImage.push('/Images/static/sun.jpg')
             break;        
         }
   }
