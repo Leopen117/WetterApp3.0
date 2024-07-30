@@ -1,20 +1,11 @@
-"use client"
-import Home from './pages/Home'
-import Prediction from './pages/Prediction'
-import {Route,Routes, BrowserRouter} from 'react-router-dom'
+import WeatherApp from "./components/home";
 
 
-export default function Page(){
+export default function Home(){
 
-  return (
+  return(
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/prediction' element={<Prediction />}></Route>
-      </Routes>
-    </BrowserRouter>
+      <WeatherApp/>
     </>
   )
-
 }

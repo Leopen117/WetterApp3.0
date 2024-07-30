@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
+import Link from "next/link"
 
-function FootNavbar() {
+function Navbar() {
     return(    
         <nav className="navbar navbar-expand-lg " style={{backgroundColor: "#E6E6E6", height: "150px"}} >
         <div className="container-fluid">
@@ -12,10 +13,10 @@ function FootNavbar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link active h2" aria-current="page" href="#">Home</a>
+                <Link className="nav-link active h2" aria-current="page" href="/">Home</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link me-5 h2" href="#">Prediction</a>
+                <Link className="nav-link me-5 h2" href="/detailView">DetailView</Link>
               </li>
             </ul>
           </div>
@@ -23,4 +24,4 @@ function FootNavbar() {
       ) 
 }
 
-export default FootNavbar
+export default Navbar

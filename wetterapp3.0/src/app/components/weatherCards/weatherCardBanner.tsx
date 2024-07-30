@@ -4,11 +4,12 @@ import WeatherCard from "./weatherCard"
 
 interface WeatherCardBannerProps{
   weatherCardData:(string | number)[][]
+  detailDiagramData: string
 }
-function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
+function WeatherCardBanner({weatherCardData, detailDiagramData}:WeatherCardBannerProps){
     const [dailyPrecipitationMean, setDailyPrecipitationMean] = useState(weatherCardData[0]);
-    const [dailyTemperatureMin, setDailyTemperatureMin] = useState(weatherCardData[1] || []);
-    const [dailyTemperaturesMax, setDailyTemperaturesMax] = useState(weatherCardData[2]);
+    const [dailyTemperaturesMax, setDailyTemperaturesMax] = useState(weatherCardData[1]);
+    const [dailyTemperatureMin, setDailyTemperatureMin] = useState(weatherCardData[2] || []);
     const [dailyDates, setDailyDates] = useState(weatherCardData?.[3] || []);
     const [dailyWindSpeed, setDailyWindSpeed] = useState(weatherCardData[4]);
     const [dailyWeatherCode, setDailyWeatherCode] = useState(weatherCardData[5]);
@@ -17,27 +18,27 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
 
     useEffect(()=> {
       setDailyPrecipitationMean(weatherCardData[0]);
-      setDailyTemperatureMin(weatherCardData[1] || []);
-      setDailyTemperaturesMax(weatherCardData[2]);
+      setDailyTemperaturesMax(weatherCardData[1]);
+      setDailyTemperatureMin(weatherCardData[2] || []);
       setDailyDates(weatherCardData[3] || []);
       setDailyWindSpeed(weatherCardData[4]);
       setDailyWeatherCode(weatherCardData[5]);
     }, [weatherCardData])
     
+
+
+    function HandleClick(){
+      sessionStorage.setItem("detailDiagramData", detailDiagramData)
+    }
     // Build card content data   
     for (let i = 0; i < dailyDates.length; i++) {
         const dateToString: string = dailyDates[i].toString()
         const dateArray: string[] = dateToString.split("-")       
         const date = dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
         finalDailyDateData.push(date);
-
         const weatherCode = dailyWeatherCode[i] as number;
 
-        // if (weatherCode === 3 || (weatherCode >= 21 && weatherCode <= 24))
 
-        // if ([3, 21, 22, 23, 24, 50, 51, 52, 53, 56, 60, 61, 70, 71].includes(weatherCode)) {
-        //   weatherImage.push('/Images/static/cloudy.jpg');
-        // } else if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 20, 28, 30, 31, 32, 33, 34, 35, 40])
 
         switch(weatherCode){
           case 3:
@@ -174,6 +175,7 @@ function WeatherCardBanner({weatherCardData}:WeatherCardBannerProps){
              tempMax={dailyTemperaturesMax?.[i]}
              windSpeed={dailyWindSpeed?.[i]}
              weatherImage={weatherImage?.[i]}
+             HandleClick={HandleClick}
              ></WeatherCard>
             ))}          
         </div>
