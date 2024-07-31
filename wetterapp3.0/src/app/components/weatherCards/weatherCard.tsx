@@ -2,23 +2,23 @@ import Image from 'next/image'
 import  Link  from "next/link";
 import { MouseEventHandler } from 'react';
 interface WeatherCardProps{
+    id: number,
     precipitation: string | number,
     date:string,
     tempMin:string | number,
     tempMax: string | number,
     windSpeed: string | number,
     weatherImage: string 
-    HandleClick: MouseEventHandler
+    HandleClick: any
 }
-function WeatherCard({precipitation, date, tempMin, tempMax, windSpeed, weatherImage, HandleClick}: WeatherCardProps) {
-     
+function WeatherCard({id, precipitation, date, tempMin, tempMax, windSpeed, weatherImage, HandleClick}: WeatherCardProps) {
 
     
 return (
     <>
         <div className="card p-0" style={{width: 270}} >
             <div className="card-img-top ">
-            <Link className="nav-link me-5 h2" href="/detailView" onClick={HandleClick}>
+            <Link className="nav-link me-5 h2" href="/detailView" onClick={()=>HandleClick(id)}>
                 <Image 
                 src={weatherImage} 
                 className="rounded-top" 

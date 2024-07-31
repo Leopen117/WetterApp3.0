@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import WeatherCard from "./weatherCard"
 
 
+
 interface WeatherCardBannerProps{
   weatherCardData:(string | number)[][]
-  detailDiagramData: string
+  detailDiagramData: string[][]
+  setDetailDiagramData: (detailDiagramData:string[][]) => void
 }
-function WeatherCardBanner({weatherCardData, detailDiagramData}:WeatherCardBannerProps){
+function WeatherCardBanner({weatherCardData, detailDiagramData, setDetailDiagramData}:WeatherCardBannerProps){
     const [dailyPrecipitationMean, setDailyPrecipitationMean] = useState(weatherCardData[0]);
     const [dailyTemperaturesMax, setDailyTemperaturesMax] = useState(weatherCardData[1]);
     const [dailyTemperatureMin, setDailyTemperatureMin] = useState(weatherCardData[2] || []);
@@ -26,10 +28,44 @@ function WeatherCardBanner({weatherCardData, detailDiagramData}:WeatherCardBanne
     }, [weatherCardData])
     
 
-
-    function HandleClick(){
-      sessionStorage.setItem("detailDiagramData", detailDiagramData)
+    // Prepare Dataset for DetailView
+    function prepareDetailData(start:number, end:number){
+      const preparedData: string[][] = []
+      for(let i = 0;i < 9 ;i++){
+        let prepData:string[] = detailDiagramData[i].slice(start, end)
+        preparedData.push(prepData)         
+      }
+      sessionStorage.setItem("detailDiagramData", JSON.stringify(preparedData))    
     }
+    function HandleClick(id:number){
+      switch (id) {
+        case 0:
+          prepareDetailData(0,24)
+          break;
+        case 1:
+          prepareDetailData(24,48)
+          break;
+        case 2:
+          prepareDetailData(48,72)
+          break;
+        case 3:
+          prepareDetailData(72,96)
+        case 4:
+          prepareDetailData(96,120)
+          break;
+        case 5:
+          prepareDetailData(120,144)
+          break;
+        case 6:
+          prepareDetailData(144,167)
+          break;      
+        default:
+          console.log('There is no Data!');
+          break;
+      }
+      
+    }
+
     // Build card content data   
     for (let i = 0; i < dailyDates.length; i++) {
         const dateToString: string = dailyDates[i].toString()
@@ -37,8 +73,6 @@ function WeatherCardBanner({weatherCardData, detailDiagramData}:WeatherCardBanne
         const date = dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
         finalDailyDateData.push(date);
         const weatherCode = dailyWeatherCode[i] as number;
-
-
 
         switch(weatherCode){
           case 3:
@@ -167,8 +201,11 @@ function WeatherCardBanner({weatherCardData, detailDiagramData}:WeatherCardBanne
 
         <div className="d-flex flex-row justify-content-evenly mb-5 ms-1 me-1">
           {dailyPrecipitationMean.map((_, i) => (
+
+            
              <WeatherCard
              key={i}
+             id={0+i}
              date={finalDailyDateData?.[i].toString()}
              precipitation={dailyPrecipitationMean?.[i]} 
              tempMin={dailyTemperatureMin?.[i]}
@@ -178,8 +215,9 @@ function WeatherCardBanner({weatherCardData, detailDiagramData}:WeatherCardBanne
              HandleClick={HandleClick}
              ></WeatherCard>
             ))}          
+            
         </div>
-    )
+    ) 
   
 }
 

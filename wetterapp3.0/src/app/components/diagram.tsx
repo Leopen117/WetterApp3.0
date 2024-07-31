@@ -15,7 +15,7 @@ function Diagram({diagramData}:DiagramProps) {
   let hoursArray: string[] = []
 
       
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 23; i++) {
     let date:string = hourlyTimeData[i].toString()
     date = date.slice(-5)
     hoursArray.push(date)
