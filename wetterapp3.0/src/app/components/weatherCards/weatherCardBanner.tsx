@@ -31,7 +31,7 @@ function WeatherCardBanner({weatherCardData, detailDiagramData, setDetailDiagram
     // Prepare Dataset for DetailView
     function prepareDetailData(start:number, end:number){
       const preparedData: string[][] = []
-      for(let i = 0;i < 9 ;i++){
+      for(let i = 0;i < 10 ;i++){
         let prepData:string[] = detailDiagramData[i].slice(start, end)
         preparedData.push(prepData)         
       }

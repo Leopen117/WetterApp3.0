@@ -9,18 +9,14 @@ interface DiagramProps{
 }
 
 function Diagram({diagramData}:DiagramProps) {
-
+// get just the time from diagramDate
   const hourlyTimeData: (string | number)[] = diagramData[0]
   const hourlyTemperatures: (string | number)[] = diagramData[1]
-  let hoursArray: string[] = []
-
-      
+  let hoursArray: string[] = []    
   for (let i = 0; i < 23; i++) {
     let date:string = hourlyTimeData[i].toString()
     date = date.slice(-5)
     hoursArray.push(date)
-
-  
   }
 
 

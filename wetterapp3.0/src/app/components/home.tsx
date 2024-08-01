@@ -17,8 +17,9 @@ export default function WeatherApp() {
   const [detailDiagramData, setDetailDiagramData]= React.useState<string[][]>([[]])
  
   const getTempAndWeatherCodeForLatLong = useCallback(async (lat: number, lon: number) => {
-    const urlTempWeatherCode: string = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers,snowfall,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_mean,weather_code,wind_speed_10m_max`;
-    const dataPromiseTempWeahterCode: Response = await fetch(urlTempWeatherCode);
+    const urlTempWeatherCode: string = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,precipitation_probability,precipitation,rain,showers,snowfall,wind_speed_10m,wind_speed_80m,wind_speed_120m,wind_speed_180m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_mean,weather_code,wind_speed_10m_max`;
+    
+     const dataPromiseTempWeahterCode: Response = await fetch(urlTempWeatherCode);
      const dataJsonWeather = await dataPromiseTempWeahterCode.json();      
     
      setWeatherCardData(
@@ -38,17 +39,19 @@ export default function WeatherApp() {
     setDetailDiagramData(
         [dataJsonWeather.hourly.time,
         dataJsonWeather.hourly.temperature_2m,
-        dataJsonWeather.hourly.apparent_temperature,
-        dataJsonWeather.hourly.precipitation_probability,
         dataJsonWeather.hourly.precipitation,
         dataJsonWeather.hourly.rain,
         dataJsonWeather.hourly.showers,
         dataJsonWeather.hourly.snowfall,
-        dataJsonWeather.hourly.weather_code
-        ] 
-      
+        dataJsonWeather.hourly.wind_speed_10m,
+        dataJsonWeather.hourly.wind_speed_80m,
+        dataJsonWeather.hourly.wind_speed_120m,
+        dataJsonWeather.hourly.wind_speed_180m
+        ]
     )
   }, [])
+
+  
       // Get Data
       const getLatLonOfLocation = useCallback(async () => {
         const urlLocation = `https://nominatim.openstreetmap.org/search?q=${location}&format=json`;
